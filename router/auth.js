@@ -41,9 +41,11 @@ router.get('/',(req,res)=>{
 
     
 
+
+
 router.post('/register',async(req,res)=>{
-    const {FirstName, LastName, Email, Password, C_Password, Pin,AccountNo,Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName, Address}=req.body//how to add address city and state
-    if(!FirstName|| !LastName|| !Email|| !Password|| !C_Password|| !Pin||!AccountNo||!Bank_Balance|| !AadhaarCard|| !PANCard|| !PhoneNo|| !FatherName|| !Address){
+    const {FirstName, LastName, Email, Password, C_Password, Pin,Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName, Address}=req.body//how to add address city and state
+    if(!FirstName|| !LastName|| !Email|| !Password|| !C_Password|| !Pin||!Bank_Balance|| !AadhaarCard|| !PANCard|| !PhoneNo|| !FatherName|| !Address){
         return res.status(422).json({error:'error'})
     }
     // return res.json(req.body);
@@ -63,13 +65,16 @@ router.post('/register',async(req,res)=>{
             return res.status(422).json({error:"Already exist Credentials"});
         }
         else{
-            const user=new User({FirstName, LastName, Email, Password, C_Password, Pin, AccountNo, Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName, Address});
-
-            //hashing the password need to be added here***********************************************************************************************
+            const user=new User({FirstName, LastName, Email, Password, C_Password, Pin, Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName, Address});
 
             
+            console.log(user.AccountNo)//randomly generated AccountNo
+
+
+//hashing the password need to be added here***********************************************************************************************
             // const userRegister=await user.save();
             await user.save();
+            
             res.status(201).json({message:"user registered successfully"});
         }
         
@@ -79,6 +84,9 @@ router.post('/register',async(req,res)=>{
         console.log(err);
     }
 })
+
+
+
 
 //login router
 router.post('/signin',async(req,res)=>{
@@ -104,10 +112,10 @@ router.post('/signin',async(req,res)=>{
             }
             else{
                 
-                console.log(userLogin)
+                // console.log(userLogin)
                 //generating JWT token while user login
                 const token=await userLogin.generateAuthToken();
-                console.log(token)
+                // console.log(token)
 
                 res.cookie('jwt',token,{
                     expires: new Date(Date.now()+25892000000),
@@ -124,13 +132,10 @@ router.post('/signin',async(req,res)=>{
     }
 });
 
-//basic structure of using middleware
-// router.get('/other',Authenticate,(req,res)=>{
 
-//     console.log(`this is an authorized page having ${req.cookies.jwt}`)
-//     res.json({message:"doneee donadone"})
-    
-// })
+
+
+
 router.get('/balance',Authenticate,(req,res)=>{
     const balance= req.authuser.Bank_Balance
     if(balance<1000){
@@ -143,29 +148,60 @@ router.get('/balance',Authenticate,(req,res)=>{
     
 })
 
+
+
+
 router.get('/withdrawal',Authenticate,(req,res)=>{
 
     const withdrawal=req.body.withdrawal;
     const balance= req.authuser.Bank_Balance;
 
     if(balance<1000){
-        res.json({message:`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`});
-        console.log(`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`);
+        return res.json({message:`Current Bank_Balance ${balance}... less than required.`});
+        
     }
     else{
-        ///everything is working but the update function is not working
-        User.updateOne({_id:req.authuser._id},{
-            $set:{
-                Bank_Balance: balance-withdrawal
+        ///everything is working but the update function is not working???????????????????????????????????????????????
+        User.findByIdAndUpdate(req.authuser._id,{
+            Bank_Balance: 1234
+        },(err,data)=>{
+            if(err){
+                return res.json({message:`error`})
+            }
+            else{
+                res.json({message:`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`})
+                console.log(`After Withdrawal Current Bank_Balance ${data}`)
             }
         })
 
-        res.json({message:`After Withdrawal Current Bank_Balance ${balance}`})
-        console.log(`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`)
+        
 
         
     }
 })
+
+
+
+router.get('/deposite',Authenticate,(req,res)=>{
+
+    const deposite=req.body.deposite;
+    const balance= req.authuser.Bank_Balance;
+    ///everything is working but the update function is not working???????????????????????????????????????????????
+    User.findByIdAndUpdate(req.authuser._id,{
+        Bank_Balance: deposite+balance
+        },(err,data)=>{
+            if(err){
+                return res.json({message:`error`})
+            }
+            else{
+                res.json({message:`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`})
+                console.log(`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`)
+            }
+    })
+})
+
+
+
 
 router.post('/transaction',Authenticate,async(req,res)=>{
     const {FirstNameR, LastNameR, AccountNoR,Pin,Amount }=req.body//how to add address city and state
@@ -197,5 +233,20 @@ router.post('/transaction',Authenticate,async(req,res)=>{
         console.log(err);
     }
 })
+
+
+
+router.post('/delete',Authenticate,(req,res)=>{
+
+        ///everything is working but the update function is not working???????????????????????????????????????????????
+        User.findOneAndReplace(req.authuser._id,function(err){
+            if(!err){
+                console.log("Account successfully deleted");
+                res.json({message:"Account successfully deleted"})
+            }
+        }       
+        )
+})
+
 
 module.exports=router;

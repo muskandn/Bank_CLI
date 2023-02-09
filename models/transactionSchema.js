@@ -33,8 +33,6 @@ const detailsSchema=new mongoose.Schema({
     }
 })
 
-const detail =mongoose.model("Detail",detailsSchema)
-
 const transactionSchema=new mongoose.Schema({
     Email:{
         type: String,
@@ -64,6 +62,8 @@ detailsSchema.pre('save',async function(next){//no need to add res,req
 });
 
 
+const detail =mongoose.model("Detail",detailsSchema)
+
 const transaction=mongoose.model("TRANSACTION",transactionSchema);
-module.exports=transaction;
+module.exports={transaction,detail};
 
