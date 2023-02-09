@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 
 require('../db/conn')
 const User=require("../models/userSchema");
+const Transaction=require("../models/transactionSchema")
 
 router.get('/',(req,res)=>{
     res.send("hellow world")
@@ -39,6 +40,7 @@ router.get('/',(req,res)=>{
 //     });
 
     
+
 router.post('/register',async(req,res)=>{
     const {FirstName, LastName, Email, Password, C_Password, Pin,AccountNo,Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName, Address}=req.body//how to add address city and state
     if(!FirstName|| !LastName|| !Email|| !Password|| !C_Password|| !Pin||!AccountNo||!Bank_Balance|| !AadhaarCard|| !PANCard|| !PhoneNo|| !FatherName|| !Address){
@@ -69,12 +71,6 @@ router.post('/register',async(req,res)=>{
             // const userRegister=await user.save();
             await user.save();
             res.status(201).json({message:"user registered successfully"});
-
-            // if(userRegister){
-            //     res.status(201).json({message:"user registered successfully"});
-            // } else{
-            //     res.status(500).json({error:"Failed to registered"});
-            // }
         }
         
 
@@ -86,8 +82,6 @@ router.post('/register',async(req,res)=>{
 
 //login router
 router.post('/signin',async(req,res)=>{
-    // console.log(req.body);
-    // res.json({message:"awesome"})
     try{
         const {Email, Password, Pin,AccountNo}=req.body
         if(!Email || !Password || !Pin){
@@ -99,9 +93,6 @@ router.post('/signin',async(req,res)=>{
             const isMatch=await bcrypt.compare(Password,userLogin.Password)//for comparing the user entered password with the stored encrypted password
             const isMatchPin=await bcrypt.compare(Pin,userLogin.Pin)
             const isMatchAccountNo=await bcrypt.compare(AccountNo,userLogin.AccountNo)
-
-            
-
             if(!isMatch){
                 res.status(400).json({error:"Invalid credentials1"})
             }
@@ -112,8 +103,8 @@ router.post('/signin',async(req,res)=>{
                 res.status(400).json({error:"Invalid credentials3"})
             }
             else{
-                res.json({message:"user Signin Successfully"});
-
+                
+                console.log(userLogin)
                 //generating JWT token while user login
                 const token=await userLogin.generateAuthToken();
                 console.log(token)
@@ -122,28 +113,25 @@ router.post('/signin',async(req,res)=>{
                     expires: new Date(Date.now()+25892000000),
                     httpOnly: true
                 });
+                
+                res.json({message:"user Signin Successfully"});
                 }
         }else{
             res.status(400).json({error:"Invalid credentials.................."})
         }
-
-        
-        
     }catch(err){
         console.log(err);
     }
 });
 
-router.get('/other',Authenticate,(req,res)=>{
+//basic structure of using middleware
+// router.get('/other',Authenticate,(req,res)=>{
 
-    console.log(`this is an authorized page having ${req.cookies.jwt}`)
-    res.json({message:"doneee donadone"})
+//     console.log(`this is an authorized page having ${req.cookies.jwt}`)
+//     res.json({message:"doneee donadone"})
     
-
-})
-
+// })
 router.get('/balance',Authenticate,(req,res)=>{
-//// how to get all the data coresponding to the user that has been currently loged in 
     const balance= req.authuser.Bank_Balance
     if(balance<1000){
         res.json({message:`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`});
@@ -152,31 +140,62 @@ router.get('/balance',Authenticate,(req,res)=>{
         res.json({message:`Current Bank_Balance ${balance}`})
         console.log(`Current Bank_Balance ${balance}`)
     }
-    // res.json(req.authuser)
+    
 })
 
+router.get('/withdrawal',Authenticate,(req,res)=>{
 
-// router.get('/withdrawal',Authenticate,(req,res)=>{
+    const withdrawal=req.body.withdrawal;
+    const balance= req.authuser.Bank_Balance;
 
-//     const balance= req.authuser.Bank_Balance;
-//     res.json(req.authuser.Bank_Balance)
-//     if(balance<1000){
-//         res.json({message:`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`});
-//         console.log(`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`);
-//     }
-//     else{
-//         const withdrawal=req.body.withdrawal;
-//         User.updateOne({},{
-//             $set:{
-//                 Bank_Balance: balance-withdrawal
-//             }
-//         })
+    if(balance<1000){
+        res.json({message:`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`});
+        console.log(`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`);
+    }
+    else{
+        ///everything is working but the update function is not working
+        User.updateOne({_id:req.authuser._id},{
+            $set:{
+                Bank_Balance: balance-withdrawal
+            }
+        })
 
-//         res.json({message:`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`})
-//         console.log(`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`)
+        res.json({message:`After Withdrawal Current Bank_Balance ${balance}`})
+        console.log(`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`)
 
         
-//     }
-// })
+    }
+})
+
+router.post('/transaction',Authenticate,async(req,res)=>{
+    const {FirstNameR, LastNameR, AccountNoR,Pin,Amount }=req.body//how to add address city and state
+    if(!FirstNameR|| !LastNameR|| !AccountNoR||!Pin||!Amount){
+        return res.status(422).json({error:'error'})
+    }
+    // return res.json(req.body);
+    
+    try{
+        const userEmail= await Transaction.findOne({Email:Email});//database email: user input email
+
+        if(userEmail){
+            return res.status(422).json({error:"Already exist Credentials"});
+        }
+        else{
+            const userTransaction=new Transaction({FirstNameR, LastNameR, AccountNoR,Pin,Amount});
+
+            //hashing the password need to be added here***********************************************************************************************
+
+            
+            // const userRegister=await user.save();
+            await userTransaction.save();
+            res.status(201).json({message:"transaction added successfully"});
+        }
+        
+
+    }
+    catch(err){
+        console.log(err);
+    }
+})
 
 module.exports=router;

@@ -15,9 +15,9 @@ const Authenticate=async (req,res,next)=>{
         req.authuser=authuser;
         req.userID=authuser._id;
 
-        // console.log(user);
+        console.log(authuser);
 
-
+        
         next()
 
     }catch(err){
