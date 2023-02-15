@@ -1,7 +1,8 @@
-const { Command } = require("commander");
+const { program } = require("commander");
 const inquirer = require("inquirer");//// not working?????????
 const axios= require("axios")
-const program = new Command();
+// const program = new Command();
+
 
 
 const Questions = [
@@ -37,11 +38,6 @@ const Questions = [
   },
   {
     type: "input",
-    name: "AccountNo",
-    message: "Enter your Account No: ",
-  },
-  {
-    type: "input",
     name: "Bank_Balance",
     message: "Enter your Bank_Balance: ",
   },
@@ -67,70 +63,212 @@ const Questions = [
   },
   {
     type: "input",
-    name: "city",
-    message: "Enter your City Name: ",
+    name: "Address",
+    message: "Enter your Address Name: ",
+  }
+];
+
+
+const loginQuestions = [
+
+  {
+    type: "input",
+    name: "Email",
+    message: "Enter your email ID: ",
   },
   {
     type: "input",
-    name: "state",
-    message: "Enter your state Name: ",
+    name: "Password",
+    message: "Enter your password: ",
   },
+  {
+    type: "input",
+    name: "Pin",
+    message: "Enter your PIN: ",
+  },
+  {
+    type: "input",
+    name: "AccountNo",
+    message: "Enter your AccountNo: ",
+  }
 ];
 
-// testing
-program.version("2.0.0").description("Bank project");
-''
+const QuestionW = [
+  {
+    type: "input",
+    name: "withdrawal",
+    message: "Enter the amount of money you want to withdraw: ",
+  },
+  
+];
 
-const getData=async ()=>{
-    const res= await axios.get("http://localhost:4000/register");
+const QuestionD = [
+  {
+    type: "input",
+    name: "deposite",
+    message: "Enter the amount of money you want to deposite: ",
+  },
+  
+];
 
+const QuestionT = [
+  {
+    type: "input",
+    name: "withdrawal",
+    message: "Enter the amount of money you want to withdraw: ",
+  },
+  
+];
+
+program
+  .name("rncli")
+  .description("Create new React Native project with essential modules")
+  .version("0.0.1");
+
+
+
+
+/// user register process------------------------------------------------------------------------------------------------------
+async function makeRequestR(answers) {
+  const config = {
+    method: "post",
+    url: "http://localhost:4000/register",
+    data: answers
+  };
+
+  let res = await axios(config);
+
+  console.log(res.data);
 }
 
-// add command
 program
-  .command("add")
-  .alias("a")
+  .command("register")
+  .alias("r")
   .description("member added")
   .action(() => {
-    inquirer.prompt(Questions).then((answers) => getData(answers));/// may be ... not getting how to connect it
+    inquirer.prompt(Questions).then((answers) => {
+      makeRequestR(answers);
+    });
   });
 
-//find command
-// program
-//   .command("find <name>")
-//   .alias("f")
-//   .description("find member")
-//   .action((name) => {
-//     findMember(name);
-//   });
 
-// update command
-// program
-//   .command("update <_id>")
-//   .alias("u")
-//   .description("update member details")
-//   .action((_id) => {
-//     inquirer.prompt(Questions).then((answers) => {
-//       updateMember(_id, answers);
-//     });
-//   });
 
-// remove command
-// program
-//   .command("remove <_id>")
-//   .alias("d")
-//   .description("member is removed.")
-//   .action((_id) => {
-//     removeMember(_id);
-//   });
+/// user login process------------------------------------------------------------------------------------------------------------
+async function makeRequestL(answers) {
+  const config = {
+    method: "post",
+    url: "http://localhost:4000/signin",
+    data: answers
+  };
 
-// list members
+  let res = await axios(config);
+
+  console.log(res.data);
+}
+
+program
+  .command("login")
+  .alias("l")
+  .description("member loggin successfully")
+  .action(() => {
+    inquirer.prompt(loginQuestions).then((answers) => {
+      makeRequestL(answers);
+    });
+  });
+
+
+/// user check balance-----------------------------------------------------------------------------------------------------------------
+// async function makeRequestB() {
+//   const config = {
+//     method: "get",
+//     url: "http://localhost:4000/balance",
+//     // data: answers
+//   };
+
+//   let res = await axios(config);
+
+//   console.log(res.data);
+// }
 
 // program
-//   .command("list")
-//   .alias("l")
-//   .description("list the members")
+//   .command("balance")
+//   .alias("b")
+//   .description("member loggin successfully")
 //   .action(() => {
-//     listMember();
+//     axios.get("http://localhost:4000/balance")
+//     // makeRequestB();
 //   });
-// program.parse(process.argv);
+
+
+
+/// user withdrawal process------------------------------------------------------------------------------------------------------------
+async function makeRequestW(answer) {
+  const config = {
+    method: "get",
+    url: "http://localhost:4000/withdrawal",
+    data: answer
+  };
+
+  let res = await axios(config);
+
+  console.log(res.data);
+}
+
+program
+  .command("Withdraw")
+  .alias("w")
+  .description("withdrawal successful")
+  .action(() => {
+    inquirer.prompt(QuestionW).then((answer) => {
+      makeRequestW(answer);
+    });
+  });
+
+
+  
+/// user dposite process------------------------------------------------------------------------------------------------------------
+async function makeRequestD(answer) {
+  const config = {
+    method: "get",
+    url: "http://localhost:4000/deposite",
+    data: answer
+  };
+
+  let res = await axios(config);
+
+  console.log(res.data);
+}
+
+program
+  .command("Deposite")
+  .alias("d")
+  .description("successfully deposited")
+  .action(() => {
+    inquirer.prompt(QuestionD).then((answer) => {
+      makeRequestD(answer);
+    });
+  });
+
+/// user transfer process------------------------------------------------------------------------------------------------------------
+async function makeRequestT(answer) {
+  const config = {
+    method: "get",
+    url: "http://localhost:4000/transfer",
+    data: answer
+  };
+
+  let res = await axios(config);
+
+  console.log(res.data);
+}
+
+program
+  .command("Deposite")
+  .alias("d")
+  .description("successfully deposited")
+  .action(() => {
+    inquirer.prompt(QuestionT).then((answer) => {
+      makeRequestT(answer);
+    });
+  });
+program.parse();

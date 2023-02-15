@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs');
 const express=require("express");
 const router=express.Router();
-const Authenticate=require("../MiddleWare/other")
+const Authenticate=require("../MiddleWare/other");
+var fs = require("file-system");
 const cookieParser = require('cookie-parser')
 
 require('../db/conn')
@@ -44,7 +45,9 @@ router.get('/',(req,res)=>{
 
 
 router.post('/register',async(req,res)=>{
-    const {FirstName, LastName, Email, Password, C_Password, Pin,Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName, Address}=req.body//how to add address city and state
+    const {FirstName, LastName, Email, Password, C_Password, Pin,Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName,Address}=req.body//how to add address city and state
+    // const city=req.body.Address.city;
+    // const state=req.body.Address.state;
     if(!FirstName|| !LastName|| !Email|| !Password|| !C_Password|| !Pin||!Bank_Balance|| !AadhaarCard|| !PANCard|| !PhoneNo|| !FatherName|| !Address){
         return res.status(422).json({error:'error'})
     }
@@ -68,10 +71,13 @@ router.post('/register',async(req,res)=>{
             const user=new User({FirstName, LastName, Email, Password, C_Password, Pin, Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName, Address});
 
             
-            console.log(user.AccountNo)//randomly generated AccountNo
+            //randomly generated AccountNo 
+            fs.writeFile("accountNumber.txt",user.AccountNo, function (err) {
+                if (err) throw err;
+                console.log("accountNo Saved!");
+            });
 
-
-//hashing the password need to be added here***********************************************************************************************
+//hashing the password, randomly generated AccountNo need to be added here***********************************************************************************************
             // const userRegister=await user.save();
             await user.save();
             
@@ -111,17 +117,13 @@ router.post('/signin',async(req,res)=>{
                 res.status(400).json({error:"Invalid credentials3"})
             }
             else{
-                
-                // console.log(userLogin)
-                //generating JWT token while user login
                 const token=await userLogin.generateAuthToken();
-                // console.log(token)
-
-                res.cookie('jwt',token,{
-                    expires: new Date(Date.now()+25892000000),
-                    httpOnly: true
-                });
+                console.log(token)
                 
+                fs.writeFile("token.txt",token, function (err) {
+                    if (err) throw err;
+                    console.log("token Saved!");
+                });
                 res.json({message:"user Signin Successfully"});
                 }
         }else{
@@ -136,7 +138,38 @@ router.post('/signin',async(req,res)=>{
 
 
 
-router.get('/balance',Authenticate,(req,res)=>{
+router.get('/balance',Authenticate,async(req,res)=>{
+    // try{
+    //     const {Email,AccountNo}=req.body
+    //     if(!Email){
+    //         return res.status(400).json({error:"Invalid credentials"})
+    //     }
+
+    //     const userLogin= await User.findOne({Email:Email});
+    //     if(userLogin){
+    //         const isMatchAccountNo=await bcrypt.compare(AccountNo,userLogin.AccountNo)
+    //         if(!isMatchAccountNo){
+    //             res.status(400).json({error:"Invalid credentials3"})
+    //         }
+    //         else{
+    //             // const userLogin= await User.findOne({Email:Email});
+    //             const balance= req.authuser.Bank_Balance
+    //             if(balance<1000){
+    //                 res.json({message:`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`});
+    //                 console.log(`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`);
+    //             }else{
+    //                 res.json({message:`Current Bank_Balance ${balance}`})
+    //                 console.log(`Current Bank_Balance ${balance}`)
+    //             }
+                
+    //         }}
+    //     else{
+    //         res.status(400).json({error:"Invalid credentials.................."})
+    //     }
+    // }catch(err){
+    //     console.log(err);
+    // }
+    // console.log("sxdfcgvhbjnkml")
     const balance= req.authuser.Bank_Balance
     if(balance<1000){
         res.json({message:`Current Bank_Balance ${balance}. It should be greater than Rs.1000 for user benefit`});
@@ -161,22 +194,21 @@ router.get('/withdrawal',Authenticate,(req,res)=>{
         
     }
     else{
-        ///everything is working but the update function is not working???????????????????????????????????????????????
-        User.findByIdAndUpdate(req.authuser._id,{
-            Bank_Balance: 1234
+
+        User.updateOne({Email:req.authuser.Email},{
+            $set:{
+                Bank_Balance: balance-withdrawal
+            }
+            
         },(err,data)=>{
             if(err){
                 return res.json({message:`error`})
             }
             else{
-                res.json({message:`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`})
-                console.log(`After Withdrawal Current Bank_Balance ${data}`)
+                res.json({message:"Withdrawal Successfull"})
+                console.log("Withdrawal Successfull")
             }
-        })
-
-        
-
-        
+        })  
     }
 })
 
@@ -186,53 +218,46 @@ router.get('/deposite',Authenticate,(req,res)=>{
 
     const deposite=req.body.deposite;
     const balance= req.authuser.Bank_Balance;
-    ///everything is working but the update function is not working???????????????????????????????????????????????
-    User.findByIdAndUpdate(req.authuser._id,{
-        Bank_Balance: deposite+balance
+
+        User.updateOne({Email:req.authuser.Email},{
+            $set:{
+                Bank_Balance: balance+deposite
+            }
+            
         },(err,data)=>{
             if(err){
                 return res.json({message:`error`})
             }
             else{
-                res.json({message:`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`})
-                console.log(`After Withdrawal Current Bank_Balance ${req.authuser.Bank_Balance}`)
+                res.json({message:"Successfully deposited"})
+                console.log("Successfully deposited")
             }
-    })
+        })  
 })
+
 
 
 
 
 router.post('/transaction',Authenticate,async(req,res)=>{
-    const {FirstNameR, LastNameR, AccountNoR,Pin,Amount }=req.body//how to add address city and state
-    if(!FirstNameR|| !LastNameR|| !AccountNoR||!Pin||!Amount){
+    const {sendPin, receiverPin,Amount,transactionType}=req.body//how to add address city and state
+    if(!Amount||!transactionType){
         return res.status(422).json({error:'error'})
     }
-    // return res.json(req.body);
-    
-    try{
-        const userEmail= await Transaction.findOne({Email:Email});//database email: user input email
+    if(transactionType=="deposite"){
+        const transactionUser=new Transaction({sendPin:req.authuser._id,receiverPin:null,Amount,transactionType});
 
-        if(userEmail){
-            return res.status(422).json({error:"Already exist Credentials"});
-        }
-        else{
-            const userTransaction=new Transaction({FirstNameR, LastNameR, AccountNoR,Pin,Amount});
-
-            //hashing the password need to be added here***********************************************************************************************
-
-            
-            // const userRegister=await user.save();
-            await userTransaction.save();
-            res.status(201).json({message:"transaction added successfully"});
-        }
-        
-
+        await transactionUser.save()
+        res.json({message:`Transaction successful....`})
     }
-    catch(err){
-        console.log(err);
+    else if(transactionType=="withdraw"){
+        const transactionUser=new Transaction({sendPin:req.authuser._id,receiverPin:null,Amount,transactionType});
+
+        await transactionUser.save()
+        res.json({message:`Transaction successful....`})
     }
 })
+
 
 
 
@@ -244,9 +269,14 @@ router.post('/delete',Authenticate,(req,res)=>{
                 console.log("Account successfully deleted");
                 res.json({message:"Account successfully deleted"})
             }
-        }       
-        )
+        })
 })
 
 
 module.exports=router;
+
+//enclusivity
+//how ll you manage misconduct
+//undermotivated
+//introduce your community-- several activity and github and git init foss
+//ppl impact ...for continuing that  

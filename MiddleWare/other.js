@@ -1,12 +1,13 @@
 
 const jwt=require("jsonwebtoken")
 const userSchema=require("../models/userSchema")
-
+const fs=require("file-system")
+var token=fs.readFileSync("token.txt","utf8");
+// console.log(token);
 const Authenticate=async (req,res,next)=>{
-    try{
-        const token=req.cookies.jwt;
+    try{   
+        
         const verifyUser=await jwt.verify(token,process.env.SECRET_KEY);
-        // console.log(verifyUser)
         const authuser=await userSchema.findOne({_id:verifyUser._id,"tokens.token":token});
         if(!authuser){
             throw new Error("User not Found")
@@ -15,7 +16,7 @@ const Authenticate=async (req,res,next)=>{
         req.authuser=authuser;
         req.userID=authuser._id;
 
-        console.log(authuser);
+        // console.log(authuser);
 
         
         next()
@@ -29,3 +30,4 @@ const Authenticate=async (req,res,next)=>{
 }
 
 module.exports=Authenticate
+

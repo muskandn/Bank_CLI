@@ -74,32 +74,26 @@ const userSchema= new mongoose.Schema({
         required: true,
         maxlength:10,
         minlength:10,
-        unique:true
+        // unique:true
     },
     PhoneNo: {
         type:String,
         required: true,
         maxlength:10,
         minlength:10,
-        unique:true
+        // unique:true
     },
     FatherName:{
         type:String,
         required: true
     },
     Address:{
-        city:{
-            type:String,
-            required: true
-        },
-        state:{
-            type: String,
-            required: true
-        }
+
+        type:String
     },
     OpeningDate:{
         type:Date,
-        default: Date.now
+        default: Date
     },
 
     tokens:[
@@ -112,6 +106,7 @@ const userSchema= new mongoose.Schema({
     ]
     
 })
+
 //we are hashing the password
 //middle ware
 userSchema.pre('save',async function(next){//no need to add res,req
