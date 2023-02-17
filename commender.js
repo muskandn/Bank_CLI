@@ -3,122 +3,7 @@ const inquirer = require("inquirer");//// not working?????????
 const axios= require("axios")
 // const program = new Command();
 
-
-
-const Questions = [
-  {
-    type: "input",
-    name: "FirstName",
-    message: "Enter your first name: ",
-  },
-  {
-    type: "input",
-    name: "LastName",
-    message: "Enter your last name: ",
-  },
-  {
-    type: "input",
-    name: "Email",
-    message: "Enter your email ID: ",
-  },
-  {
-    type: "input",
-    name: "Password",
-    message: "Enter your password: ",
-  },
-  {
-    type: "input",
-    name: "C_Password",
-    message: "Confirm password: ",
-  },
-  {
-    type: "input",
-    name: "Pin",
-    message: "Enter your PIN: ",
-  },
-  {
-    type: "input",
-    name: "Bank_Balance",
-    message: "Enter your Bank_Balance: ",
-  },
-  {
-    type: "input",
-    name: "AadhaarCard",
-    message: "Enter your AadhaarCard No: ",
-  },
-  {
-    type: "input",
-    name: "PANCard",
-    message: "Enter your PANCard No: ",
-  },
-  {
-    type: "input",
-    name: "PhoneNo",
-    message: "Enter your Phone No: ",
-  },
-  {
-    type: "input",
-    name: "FatherName",
-    message: "Enter your Father's Name: ",
-  },
-  {
-    type: "input",
-    name: "Address",
-    message: "Enter your Address Name: ",
-  }
-];
-
-
-const loginQuestions = [
-
-  {
-    type: "input",
-    name: "Email",
-    message: "Enter your email ID: ",
-  },
-  {
-    type: "input",
-    name: "Password",
-    message: "Enter your password: ",
-  },
-  {
-    type: "input",
-    name: "Pin",
-    message: "Enter your PIN: ",
-  },
-  {
-    type: "input",
-    name: "AccountNo",
-    message: "Enter your AccountNo: ",
-  }
-];
-
-const QuestionW = [
-  {
-    type: "input",
-    name: "withdrawal",
-    message: "Enter the amount of money you want to withdraw: ",
-  },
-  
-];
-
-const QuestionD = [
-  {
-    type: "input",
-    name: "deposite",
-    message: "Enter the amount of money you want to deposite: ",
-  },
-  
-];
-
-const QuestionT = [
-  {
-    type: "input",
-    name: "withdrawal",
-    message: "Enter the amount of money you want to withdraw: ",
-  },
-  
-];
+const qn=require("./commandLine/questions")
 
 program
   .name("rncli")
@@ -146,7 +31,7 @@ program
   .alias("r")
   .description("member added")
   .action(() => {
-    inquirer.prompt(Questions).then((answers) => {
+    inquirer.prompt(qn.Questions).then((answers) => {
       makeRequestR(answers);
     });
   });
@@ -171,33 +56,10 @@ program
   .alias("l")
   .description("member loggin successfully")
   .action(() => {
-    inquirer.prompt(loginQuestions).then((answers) => {
+    inquirer.prompt(qn.loginQuestions).then((answers) => {
       makeRequestL(answers);
     });
   });
-
-
-/// user check balance-----------------------------------------------------------------------------------------------------------------
-// async function makeRequestB() {
-//   const config = {
-//     method: "get",
-//     url: "http://localhost:4000/balance",
-//     // data: answers
-//   };
-
-//   let res = await axios(config);
-
-//   console.log(res.data);
-// }
-
-// program
-//   .command("balance")
-//   .alias("b")
-//   .description("member loggin successfully")
-//   .action(() => {
-//     axios.get("http://localhost:4000/balance")
-//     // makeRequestB();
-//   });
 
 
 
@@ -219,7 +81,7 @@ program
   .alias("w")
   .description("withdrawal successful")
   .action(() => {
-    inquirer.prompt(QuestionW).then((answer) => {
+    inquirer.prompt(qn.QuestionW).then((answer) => {
       makeRequestW(answer);
     });
   });
@@ -244,10 +106,12 @@ program
   .alias("d")
   .description("successfully deposited")
   .action(() => {
-    inquirer.prompt(QuestionD).then((answer) => {
+    inquirer.prompt(qn.QuestionD).then((answer) => {
       makeRequestD(answer);
     });
   });
+
+
 
 /// user transfer process------------------------------------------------------------------------------------------------------------
 async function makeRequestT(answer) {
@@ -263,12 +127,60 @@ async function makeRequestT(answer) {
 }
 
 program
-  .command("Deposite")
-  .alias("d")
-  .description("successfully deposited")
+  .command("Transfer")
+  .alias("t")
+  .description("successfully transfered")
   .action(() => {
-    inquirer.prompt(QuestionT).then((answer) => {
+    inquirer.prompt(qn.QuestionT).then((answer) => {
       makeRequestT(answer);
     });
+  });
+
+/// user balance process------------------------------------------------------------------------------------------------------------
+  
+async function balanceRequest() {
+  const config = {
+    method: "get",
+    url: "http://localhost:4000/balance",
+    // data: answers,
+  };
+
+  let res = await axios(config);
+
+  console.log(res.data);
+}
+
+program
+  .command("balance")
+  .alias("b")
+  .description("balance is printed.")
+  .action((_id) => {
+      balanceRequest();
+    // });
+  });
+
+
+
+/// user transaction history process------------------------------------------------------------------------------------------------------------
+async function makeRequestH() {
+  const config = {
+    method: "get",
+    url: "http://localhost:4000/history",
+    // data: answer
+  };
+
+  let res = await axios(config);
+
+  console.log(res.data);
+}
+
+program
+  .command("history")
+  .alias("h")
+  .description("History is successfully showing.")
+  .action((_id) => {
+    // inquirer.prompt(QuestionH).then((answer) => {
+      makeRequestH();
+    // });
   });
 program.parse();

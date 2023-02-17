@@ -115,7 +115,7 @@ userSchema.pre('save',async function(next){//no need to add res,req
         this.Password=await bcrypt.hash(this.Password,12);  
         this.C_Password=await bcrypt.hash(this.C_Password,12);
         this.Pin=await bcrypt.hash(this.Pin,12);
-        this.AccountNo=await bcrypt.hash(this.AccountNo,12);
+        // this.AccountNo=await bcrypt.hash(this.AccountNo,12);
     }
     
     next()
@@ -133,6 +133,7 @@ userSchema.methods.generateAuthToken=async function(){
         console.log(err)
     }
 }
+
 
 const user=mongoose.model("USER",userSchema);
 module.exports=user;

@@ -5,28 +5,24 @@ const { required } = require("nodemon/lib/config");
 
 
 const transactionSchema=new mongoose.Schema({
-    sendPin:{
+    senderAccount:{
         type: String,
-        required: true
     },
-    receiverPin:{
+    receiverAccount:{
         type:String,
-        required: true,
-        default: null
+        
     },
     Amount:{
         type:Number,
-        required:true
     },
     transactionType:{
         type:String,
-        enum:["deposite","withdraw","transaction"]
+        enum:["deposite","withdrawal","transfer"]
     },
     transactionDate:{
         type:Date,
         default: Date.now
     }
-
 
     
 })
@@ -37,13 +33,13 @@ const transactionSchema=new mongoose.Schema({
 
 ////****************************************************************************************/
 //pin is in transaction schema and account no is in details schema So how to hash both
-transactionSchema.pre('save',async function(next){//no need to add res,req
+// transactionSchema.pre('save',async function(next){//no need to add res,req
     
-    this.receiverPin=await bcrypt.hash(this.receiverPin,12);
+//     this.receiverPin=await bcrypt.hash(this.receiverPin,12);
     
     
-    next()
-});
+//     next()
+// });
 
 
 
