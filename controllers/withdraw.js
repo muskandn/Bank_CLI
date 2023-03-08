@@ -19,7 +19,7 @@ module.exports=async(req,res)=>{
     
             await User.updateOne({Email:req.authuser.Email},{
                 $set:{
-                    Bank_Balance: balance-Amount
+                    Bank_Balance: Number(balance)-Number(Amount)
                 }
                 
             })  

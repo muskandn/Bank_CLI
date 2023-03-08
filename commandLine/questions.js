@@ -15,12 +15,12 @@ const Questions = [
       message: "Enter your email ID: ",
     },
     {
-      type: "input",
+      type: "password",
       name: "Password",
       message: "Enter your password: ",
     },
     {
-      type: "input",
+      type: "password",
       name: "C_Password",
       message: "Confirm password: ",
     },
@@ -48,6 +48,21 @@ const Questions = [
       type: "input",
       name: "PhoneNo",
       message: "Enter your Phone No: ",
+    },
+    {
+      type:"input",
+      name:"Age",
+      message:" Enter your Age: ",
+    },
+    {
+      type:"input",
+      name:"Age",
+      message:" Enter your Age: ",
+    },
+    {
+      type:"input",
+      name:"Gender",
+      message:" Enter your Gender: ",
     },
     {
       type: "input",
@@ -117,5 +132,41 @@ const Questions = [
     },
     
   ];
+  const QuestionDl = [
+  
+    {
+      type: "input",
+      name: "Email",
+      message: "Enter your email ID: ",
+    },
+    {
+      type: "input",
+      name: "Password",
+      message: "Enter your password: ",
+    },
+    {
+      type: "input",
+      name: "AccountNo",
+      message: "Enter your AccountNo: ",
+    }
+  ];
 
-module.exports={QuestionD,QuestionT,QuestionW,Questions,loginQuestions}
+  const QuestionPin = [
+    {
+      type: "input",
+      name: "AccountNo",
+      message: "Enter your AccountNo: ",
+    },
+    {
+      type: "input",
+      name: "Pin",
+      message: "Enter your current Pin: ",
+    },
+    {
+      type: "input",
+      name: "newPin",
+      message: "Enter your new Pin: ",
+    },
+  ];
+
+module.exports={QuestionD,QuestionT,QuestionW,Questions,loginQuestions,QuestionDl,QuestionPin}

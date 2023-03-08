@@ -1,7 +1,7 @@
 const mongoose=require("mongoose")
 const bcrypt= require("bcryptjs")
 const jwt=require('jsonwebtoken')
-const nolookalikes = require('nanoid-generate/nolookalikes');
+
 var Evalidator = require("email-validator");
 var Avalidator = require('aadhaar-validator');
 
@@ -28,14 +28,18 @@ const userSchema= new mongoose.Schema({
         }
     },
     Password: {
-        type:String,
+        type: String,
         required: true,
-        unique:true
+        lowerCase: true,
+        upperCase: true,
+        Symbol: true,
     }, 
     C_Password: {
-        type:String,
+        type: String,
         required: true,
-        unique:true
+        lowerCase: true,
+        upperCase: true,
+        Symbol: true,
     }, 
     Pin: {
         type:String,
@@ -45,7 +49,7 @@ const userSchema= new mongoose.Schema({
     AccountNo:{
         type: String,
         required: true,
-        default:nolookalikes(10),
+        
         index: { unique: true },// default is not working still now in postman need to add the account no all the time!!!!!!!!!!!!
     },
     // Expiry_Date: Current date + fixed period of time
@@ -82,6 +86,16 @@ const userSchema= new mongoose.Schema({
         maxlength:10,
         minlength:10,
         // unique:true
+    },
+    Age:{
+        type:String
+    },
+    CIF:{
+        type:String,
+        required: true
+    },
+    Gender:{
+        type: String
     },
     FatherName:{
         type:String,

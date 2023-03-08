@@ -20,6 +20,7 @@ const checkBalanceController=require("../controllers/balance")
 const withdrawalController=require("../controllers/withdraw")
 const depesiteController=require("../controllers/deposite")
 const transferController=require("../controllers/transfer")
+const changePin=require("../controllers/pinChange")
 const transactionHistoryController=require("../controllers/history")
 const deleteController=require("../controllers/delete")
 
@@ -65,6 +66,9 @@ router.get('/withdrawal',Authenticate,withdrawalController)
 
 //deposite route
 router.get('/deposite',Authenticate,depesiteController)
+
+//changing the pin route
+router.get('/changePin',Authenticate,changePin)
 
 //transfer route
 router.get('/transfer',Authenticate,transferController)

@@ -1,5 +1,7 @@
 
 const User=require("../models/userSchema");
+
+
 module.exports=async(req,res)=>{
     // try{
     //     const {Email,AccountNo}=req.body

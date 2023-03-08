@@ -5,10 +5,11 @@ const Transaction=require("../models/transactionSchema")
 
 module.exports=async(req,res)=>{
     const Amount=req.body.Amount;
+    const receiverAccount=req.body.receiverAccount;
     const balance= req.authuser.Bank_Balance;
     const senderAccount=req.authuser.AccountNo;
     const transactionType="transfer";
-    const receiverAccount=req.body.receiverAccount;
+    
 
     // const isMatchAccountNo=await bcrypt.compare(AccountNo,receiverAccount)
     const isMatchAccountNo= await User.findOne({AccountNo:receiverAccount});
@@ -22,13 +23,13 @@ module.exports=async(req,res)=>{
         
                 await User.updateOne({Email:req.authuser.Email},{
                     $set:{
-                        Bank_Balance: balance-Amount
+                        Bank_Balance: Number(balance)-Number(Amount)
                     }
                     
                 })  
                 await User.updateOne({AccountNo:receiverAccount},{
                     $set:{
-                        Bank_Balance: balance + Amount
+                        Bank_Balance: Number(balance) + Number(Amount)
                     }
                 })
 

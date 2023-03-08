@@ -1,4 +1,4 @@
-const fs = require("file-system");
+// const fs = require("file-system");
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 require('../db/conn')
@@ -28,13 +28,15 @@ module.exports=async(req,res)=>{
             // }
             else{
                 const token=await userLogin.generateAuthToken();
-                console.log(token)
+                // console.log(token)
                 
-                fs.writeFile("token.txt",token, function (err) {
-                    if (err) throw err;
-                    console.log("token Saved!");
-                });
-                res.json({message:"user Signin Successfully"});
+
+
+                // fs.writeFile("token.txt",token, function (err) {
+                //     if (err) throw err;
+                //     console.log("token Saved!");
+                // });
+                res.json({message:"user Signin Successfully",token});
                 }
         }else{
             res.status(400).json({error:"Invalid credentials.................."})
