@@ -54,11 +54,11 @@ const Questions = [
       name:"Age",
       message:" Enter your Age: ",
     },
-    {
-      type:"input",
-      name:"Age",
-      message:" Enter your Age: ",
-    },
+    // {
+    //   type:"input",
+    //   name:"Age",
+    //   message:" Enter your Age: ",
+    // },
     {
       type:"input",
       name:"Gender",

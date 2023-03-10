@@ -10,7 +10,7 @@ async function makeRequestL(answers) {
       let res = await axios(config);
       fs.writeFile("token.txt",res.data.token, function (err) {
           if (err) throw err;
-          console.log(res.data.token);
+        //   console.log(res.data.token);
           console.log("token Saved!");
       });
       

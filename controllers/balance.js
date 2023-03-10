@@ -48,5 +48,6 @@ module.exports=async(req,res)=>{
         });
     }catch(Err){
         console.log(Err)
+        // res.status(201).json({message:"user need to register fi"});
     }
 }

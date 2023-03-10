@@ -1,7 +1,7 @@
 const mongoose=require("mongoose")
 const bcrypt= require("bcryptjs")
 const jwt=require('jsonwebtoken')
-
+const validator = require('validator');
 var Evalidator = require("email-validator");
 var Avalidator = require('aadhaar-validator');
 
@@ -18,21 +18,29 @@ const userSchema= new mongoose.Schema({
         required: true
     },
     Email: {
-        type:String,
-        required: true,
-        unique:true,
-        validator(value){
-            if(!Evalidator(value)){
-                throw new Error("Email is invalid");
-            }
-        }
+        // type:String,
+        // required: true,
+        // unique:true,
+        // // validator(value){
+        // //     if(!Evalidator(value)){
+        // //         throw new Error("Email is invalid");
+        // //     }
+        // // }
+        type: String,          
+        require: [true, 'Enter an email address.'],          
+        unique: [true, 'That email address is taken.'],          
+        lowercase: true,          
+        validate: [validator.isEmail, 'Enter a valid email address.']
     },
     Password: {
-        type: String,
-        required: true,
-        lowerCase: true,
-        upperCase: true,
-        Symbol: true,
+        // type: String,
+        // required: true,
+        // lowerCase: true,
+        // upperCase: true,
+        // Symbol: true,
+        type: String,        
+        required: [true, 'Enter a password.'],        
+        minLength: [4, 'Password should be at least four characters']
     }, 
     C_Password: {
         type: String,
@@ -40,6 +48,14 @@ const userSchema= new mongoose.Schema({
         lowerCase: true,
         upperCase: true,
         Symbol: true,
+        // type: String,        
+        // required: [true, 'Retype your password.'],        
+        // validate: {            
+        //     validator: function(el) {            
+        //         return el === this.password;        
+        //     }, 
+        //     message: 'Passwords don\'t match.'
+        // }
     }, 
     Pin: {
         type:String,
@@ -78,6 +94,11 @@ const userSchema= new mongoose.Schema({
         required: true,
         maxlength:10,
         minlength:10,
+        validator(value){
+            if(value.length>10|| value.length<10){
+                throw new Error("Pin length is less than required")
+            }
+        }
         // unique:true
     },
     PhoneNo: {
@@ -90,10 +111,10 @@ const userSchema= new mongoose.Schema({
     Age:{
         type:String
     },
-    CIF:{
-        type:String,
-        required: true
-    },
+    // CIF:{
+    //     type:String,
+    //     required: true
+    // },
     Gender:{
         type: String
     },
@@ -118,8 +139,8 @@ const userSchema= new mongoose.Schema({
             }
         }
     ]
-    
-})
+});
+
 
 //we are hashing the password
 //middle ware

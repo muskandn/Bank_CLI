@@ -30,11 +30,7 @@ async function makeRequestR(answers) {
       // let currentDate = `${day}-${month}-${year}`;
       
 
-      fs.writeFile("data.txt",passbook, function (err) {
-        if (err) throw err;
-        // console.log(res.data.token);
-        console.log("Passbook Generated successfully");
-    });
+      
 
     // const token=fs.readFileSync("data.txt","utf8");
     const passbook=`
@@ -48,13 +44,19 @@ async function makeRequestR(answers) {
         Account No.: ${res.data.AccountNo}                                                                                                                                            
         Address: ${answers.Address}                                                                            
         Phone No: ${answers.PhoneNo}                                                                                
-        Email: ${answers.Email}    
+        Email: ${answers.Email}   
         AadhaarCard: ${answers.AadhaarCard}
+        Gender: ${answers.Gender}
+        Age: ${answers.Age} 
         Date of Issue: ${day}-${month}-${year}                                                                    
                                                                                            
       -------------------------------------------------------------------
       `
-      
+      fs.writeFile("data.txt",passbook, function (err) {
+        if (err) throw err;
+        // console.log(res.data.token);
+        console.log("Passbook Generated successfully");
+    });
       console.log(passbook);
     
   }

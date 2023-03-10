@@ -1,17 +1,19 @@
 
       -------------------------------------------------------------------
-                                
-      Bank of Origin
-      --------------     
+                        ------------------        
+                        | Bank of Origin |
+                        ------------------     
                                                                                        
-      Name: bb bb                                                 
-      S/D/H/o: gg
-      Account No.: s3APcWaggx                                                                                                                                            
-      Address: gg                                                                            
-      Phone No: 2222222222                                                                                
-      Email: bb@gmail.com    
-      AadhaarCard: 222222222222
-      Date of Issue: 5-3-2023                                                                    
+        Name: dfg wesfdg                                                 
+        S/D/H/o: ee
+        Account No.: y7YcTSzpXJ                                                                                                                                            
+        Address: ee                                                                            
+        Phone No: 1231231233                                                                                
+        Email: dsfg@gmail.com   
+        AadhaarCard: 123123123123
+        Gender: ee
+        Age: 22 
+        Date of Issue: 10-3-2023                                                                    
                                                                                            
       -------------------------------------------------------------------
       

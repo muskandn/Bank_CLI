@@ -5,10 +5,10 @@ const User=require("../models/userSchema");
 // const data1=require("../utility/dataRetrive")
 
 module.exports=async(req,res)=>{
-    const {FirstName, LastName, Email, Password, C_Password, Pin,Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName,Address}=req.body//how to add address city and state
+    const {FirstName, LastName, Email, Password, C_Password, Pin,Bank_Balance, AadhaarCard, PANCard, PhoneNo,Age,Gender, FatherName,Address}=req.body//how to add address city and state
     // const city=req.body.Address.city;
     // const state=req.body.Address.state;
-    if(!FirstName|| !LastName|| !Email|| !Password|| !C_Password|| !Pin||!Bank_Balance|| !AadhaarCard|| !PANCard|| !PhoneNo|| !FatherName|| !Address){
+    if(!FirstName|| !LastName|| !Email|| !Password|| !C_Password|| !Pin||!Bank_Balance|| !AadhaarCard|| !PANCard|| !PhoneNo||!Age||!Gender|| !FatherName|| !Address){
         return res.status(422).json({error:'error'})
     }
     // return res.json(req.body);
@@ -34,7 +34,7 @@ module.exports=async(req,res)=>{
         else{
 
             const AccountNo=nolookalikes(10);
-            const user=new User({FirstName, LastName, Email, Password, C_Password, Pin, AccountNo,Bank_Balance, AadhaarCard, PANCard, PhoneNo, FatherName, Address});
+            const user=new User({FirstName, LastName, Email, Password, C_Password, Pin, AccountNo,Bank_Balance, AadhaarCard, PANCard, PhoneNo,Age, Gender, FatherName, Address});
 
             
             
