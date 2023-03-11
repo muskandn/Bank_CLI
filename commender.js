@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { program } = require("commander");
 const inquirer = require("inquirer");//// not working?????????
 const axios= require("axios")
@@ -23,7 +25,7 @@ cfonts.say('Welcome!', {
 	env: 'node'                 // define the environment cfonts is being executed in
 });
 
-cfonts.say('Bank of Union', {
+cfonts.say('Bank of Origin', {
 	font: 'block',              // define the font face
 	align: 'center',              // define text alignment
 	colors: ['system'],         // define all colors
@@ -202,10 +204,6 @@ program
       makeRequestDl(answer);
     });
   });
-
-
-
-
 
 
 
