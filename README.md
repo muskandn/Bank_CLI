@@ -33,7 +33,7 @@ Client: `commander.js` `inquirer.js` `bcrypt.js`
 ![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-help.png?raw=true)
 
 
-bash
+```bash
 Options:
   -h, --help      display help for command
 
@@ -50,6 +50,7 @@ Commands:
   fd|f            Make fd
   delete|del      Account is deleted.
   help [command]  display help for command
+```
 
 3. To start interacting with this package run given command :
 ```bash
@@ -81,7 +82,7 @@ To logged in an existing account :
 ![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-l1.png?raw=true)
 
 ### Features
-bash
+```bash
 1. Withdraw
 2. Deposit
 3. Check balance
@@ -91,6 +92,7 @@ bash
 7. Fd
 8. Delete account
 9. Exit
+```
 
 
 
