@@ -88,7 +88,7 @@ To logged in an existing account :
 3. Check balance
 4. Transfer money
 5. Change pin
-6. Transactions history
+6. Transaction history
 7. Fd
 8. Delete account
 9. Exit
