@@ -53,7 +53,7 @@ module.exports = function () {
   async function withdFdRequest(ans) {
     const userToken = retrieveUserToken();
 
-    let res = await axios.post(
+    let res = await axios.get(
       "http://localhost:4000/fdWithdraw",
       {
         data: ans,
@@ -72,7 +72,7 @@ module.exports = function () {
   async function fdRequest(answers) {
     const userToken = retrieveUserToken();
 
-    let res = await axios.post(
+    let res = await axios.get(
       "http://localhost:4000/fdCreate",
       {
         data: answers,

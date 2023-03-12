@@ -66,10 +66,10 @@ module.exports=async(req,res)=>{
             
             console.log(AccountNo);
             //randomly generated AccountNo 
-            // fs.writeFile("accountNumber.txt",user.AccountNo, function (err) {
-            //     if (err) throw err;
-            //     console.log("accountNo Saved!");
-            // });
+            fs.writeFile("accountNumber.txt",user.AccountNo, function (err) {
+                if (err) throw err;
+                console.log("accountNo Saved!");
+            });
 
 //hashing the password, randomly generated AccountNo need to be added here***********************************************************************************************
             // const userRegister=await user.save();
@@ -89,7 +89,7 @@ module.exports=async(req,res)=>{
             // }
             await user.save();
 
-            res.status(201).json({message: "user registered successfully", AccountNo});
+            res.status(201).json({message: "user registered successfully"});
             // const dataMain=data1();
             // console.log(dataMain.data)
             // const token=fs.readFileSync("data.txt","utf8");

@@ -109,11 +109,6 @@ const Questions = [
     },
     {
       type: "input",
-      name: "Email",
-      message: "Enter your Email id: ",
-    },
-    {
-      type: "input",
       name: "Pin",
       message: "Enter your Pin: ",
     },
@@ -125,6 +120,11 @@ const Questions = [
       type: "input",
       name: "Amount",
       message: "Enter the amount of money you want to deposite: ",
+    },
+    {
+      type: "input",
+      name: "Pin",
+      message: "Enter your Pin: ",
     },
     
   ];
@@ -179,4 +179,33 @@ const Questions = [
     },
   ];
 
-module.exports={QuestionD,QuestionT,QuestionW,Questions,loginQuestions,QuestionDl,QuestionPin}
+  const fdQues = [
+    {
+      type: "input",
+      name: "option",
+      message: "Enter option: ",
+    },
+    {
+      type: "input",
+      name: "amount",
+      message: "Enter the amount: ",
+    },
+    {
+      type: "input",
+      name: "nomine",
+      message: "Nomine name: ",
+    },
+  ];
+  const withdFd = [
+    {
+      type: "input",
+      name: "account",
+      message: "Enter account Number: ",
+    },
+    {
+      type: "input",
+      name: "token",
+      message: "Enter token: ",
+    },
+  ];
+module.exports={QuestionD,QuestionT,QuestionW,Questions,withdFd,fdQues,loginQuestions,QuestionDl,QuestionPin}

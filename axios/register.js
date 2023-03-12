@@ -19,14 +19,14 @@ module.exports=()=>{
       // console.log(res.data.Age);
       // console.log(res.data.message)
 
-      fs.writeFile(
-        "accountNumber.txt",
-        res.data.AccountNo,
-        function (err) {
-          if (err) throw err;
-          // console.log("AccountNo Saved in your device!");
-        }
-      );
+      // fs.writeFile(
+      //   "accountNumber.txt",
+      //   res.data.AccountNo,
+      //   function (err) {
+      //     if (err) throw err;
+      //     // console.log("AccountNo Saved in your device!");
+      //   }
+      // );
 
       const date = new Date();
 

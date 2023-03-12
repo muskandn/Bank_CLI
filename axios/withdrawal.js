@@ -20,6 +20,12 @@ async function makeRequestW(answer) {
   }
 
   inquirer.prompt(qn.QuestionW).then((answers)=>{
-    makeRequestW(answers)
+    // if(answers.Amount>req.authuser.Bank_Balance){
+    //   return res.status(422).json({error:"Already exist Credentials--------------"});
+    // }
+    // else{
+      makeRequestW(answers)
+    // }
+    
   })
 }

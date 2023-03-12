@@ -77,10 +77,10 @@ router.get('/transfer',Authenticate,transferController)
 
 
 //fixed deposite
-router.get('./fdCreate',Authenticate,fdCreate)
+router.post('./fdCreate',Authenticate,fdCreate)
 
 //fd withdraw
-router.get('./fdWithdraw',Authenticate,fdWithdraw)
+router.post('./fdWithdraw',Authenticate,fdWithdraw)
 
 //get transaction history route
 router.get('/history',Authenticate,transactionHistoryController)

@@ -25,12 +25,12 @@ module.exports = async (req, res) => {
     // console.log(token);
 
     //name
-    const name = req.authuser.name;
+    const name = req.authuser.FirstName + req.authuser.LastName;
     // generating token
     const token = Math.floor(Math.random() * 1000);
     // storing interest
     let interest;
-    if (req.authuser.age > 60) {
+    if (req.authuser.Age > 60) {
       interest = fdir[option - 1][3];
     } else {
       interest = fdir[option - 1][2];
@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
     let fdDate = new Date();
 
     // account number
-    var accountNumber = req.authuser.accountNumber;
+    var accountNumber = req.authuser.AccountNo;
     // min time
     let min = fdir[option - 1][0];
     let max = fdir[option - 1][1];

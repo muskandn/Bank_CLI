@@ -29,7 +29,7 @@ module.exports = function () {
   const makeRequestH=require("../axios/history")
   const makeRequestDl=require("../axios/delete")
   const makeRequestP=require("../axios/changePin")
-  const makeRequestF=require("../axios/fd")
+  const makeRequestF=require("../axios/make_fd_and_withdraw_fd")
   // exit function
 
   function exit() {
