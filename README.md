@@ -20,17 +20,16 @@ Client: `commander.js` `inquirer.js` `bcrypt.js`
 
 1. First install banking system package globally in your system :
 
-bash
+```bash
   npm install -g banking-system
-
+```
 
 2. Now to become familiar with this package run help command :
-bash
+```bash
     banking-system help
-
+```
 
 ### Screenshot
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-g.png?raw=true)
 ![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-help.png?raw=true)
 
 
@@ -53,28 +52,32 @@ Commands:
   help [command]  display help for command
 
 3. To start interacting with this package run given command :
-bash
+```bash
     banking-system start
-
+```
 ### Screenshot
+
 ![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-g.png?raw=true)
 ![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-s1.png?raw=true)
 
 To create an account :
-bash
+```bash
     banking-system register
-
+```
 ### Screenshot
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-g.png?raw=true)
+
 ![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-r1.png?raw=true)
+
+### Passbook
+
 ![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-r2.png?raw=true)
 
 To logged in an existing account :
-bash
+```bash
     banking-system login
-
+```
 ### Screenshot
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-g.png?raw=true)
+
 ![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-l1.png?raw=true)
 
 ### Features
