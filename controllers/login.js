@@ -28,10 +28,10 @@ module.exports=async(req,res)=>{
             // }
             else{
                 const token=await userLogin.generateAuthToken();
-                // console.log(token)
+                console.log(token)
                 
 
-
+                
                 // fs.writeFile("token.txt",token, function (err) {
                 //     if (err) throw err;
                 //     console.log("token Saved!");

@@ -70,7 +70,47 @@ const makeRequestH=require("./axios/history")
 const makeRequestDl=require("./axios/delete")
 const makeRequestP=require("./axios/changePin")
 
+// choice 1
+const array = [
+  "1. New account",
+  "2. Existing account"
+]
 
+
+const homeQues = [
+  {
+    type: "input",
+    name: "value",
+    message: "Enter choice (1 or 2) ",
+  },
+];
+
+function checkChoice(answer){
+  if(answer.value === "1"){
+    makeRequestR();
+  }else{
+    makeRequestL();
+  }
+}
+
+//starting-------------------------------------------------
+
+program
+  .command("start")
+  .alias("s")
+  .description("Starting page")
+  .action(() => {
+    array.forEach((value)=>{
+      console.log(value);
+    });
+    inquirer.prompt(homeQues).then((answers) => {
+      checkChoice(answers);
+    });
+  });
+
+
+
+//if user wants to run the commands directly (instead of choosing options)---------------------------------------------------------------------------------------------
 
 //user registration process--------------------------------------------------------------------------------------------------------------
 program
@@ -78,24 +118,21 @@ program
   .alias("r")
   .description("Registration/ Signup")
   .action(() => {
-    inquirer.prompt(qn.Questions).then((answers) => {
-      makeRequestR(answers);
-    });
-  });
+      makeRequestR();
+    }
+  );
 
 
 
 /// user login process------------------------------------------------------------------------------------------------------------
-
 program
   .command("login")
   .alias("l")
   .description("Singin")
   .action(() => {
-    inquirer.prompt(qn.loginQuestions).then((answers) => {
-      makeRequestL(answers);
-    });
-  });
+      makeRequestL();
+  }
+  );
 
 
 
@@ -106,10 +143,9 @@ program
   .alias("w")
   .description("Money Withdrawal")
   .action(() => {
-    inquirer.prompt(qn.QuestionW).then((answer) => {
-      makeRequestW(answer);
+      makeRequestW();
     });
-  });
+  
 
 
   
@@ -120,10 +156,9 @@ program
   .alias("d")
   .description("Money Deposit")
   .action(() => {
-    inquirer.prompt(qn.QuestionD).then((answer) => {
-      makeRequestD(answer);
+      makeRequestD();
     });
-  });
+
 
 
 
@@ -145,10 +180,10 @@ program
   .alias("t")
   .description("Money Transfer")
   .action(() => {
-    inquirer.prompt(qn.QuestionT).then((answer) => {
-      makeRequestT(answer);
+
+      makeRequestT();
     });
-  });
+
 
 
 
@@ -173,10 +208,9 @@ program
   .alias("p")
   .description("Changie Pin")
   .action((_id) => {
-    inquirer.prompt(qn.QuestionPin).then((answer) => {
-      makeRequestP(answer);
+      makeRequestP();
     });
-  });
+
 
 
 /// user transaction history process------------------------------------------------------------------------------------------------------------
@@ -200,10 +234,10 @@ program
   .alias("dl")
   .description("Delete Account")
   .action(() => {
-    inquirer.prompt(qn.QuestionDl).then((answer) => {
+
       makeRequestDl(answer);
     });
-  });
+
 
 
 

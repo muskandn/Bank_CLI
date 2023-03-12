@@ -1,22 +1,30 @@
+const inquirer = require("inquirer");
 const data=require("../utility/dataRetrive")
 const axios= require("axios")
 const fs=require("file-system")
-
-async function makeRequestR(answers) {
-    const config = {
+const qn=require("../commandLine/questions") 
+const functionality=require("../controllers/functionalities")
+const makeRequestL=require("./login")
+module.exports=()=>{
+  async function makeRequestR(answers) {
+      const config = {
         method: "post",
         url: "http://localhost:4000/register",
-        data: answers
+        data: answers,
       };
     
       let res = await axios(config);
+      // console.log(res.data.success);
+      // console.log(res.data.AccountNo);//only this is defined
+      // console.log(res.data.Age);
+      // console.log(res.data.message)
 
       fs.writeFile(
         "accountNumber.txt",
         res.data.AccountNo,
         function (err) {
           if (err) throw err;
-          console.log("AccountNo Saved in your device!");
+          // console.log("AccountNo Saved in your device!");
         }
       );
 
@@ -28,9 +36,6 @@ async function makeRequestR(answers) {
 
       // This arrangement can be altered based on how we want the date's format to appear.
       // let currentDate = `${day}-${month}-${year}`;
-      
-
-      
 
     // const token=fs.readFileSync("data.txt","utf8");
     const passbook=`
@@ -55,10 +60,31 @@ async function makeRequestR(answers) {
       fs.writeFile("data.txt",passbook, function (err) {
         if (err) throw err;
         // console.log(res.data.token);
-        console.log("Passbook Generated successfully");
+        // console.log("Passbook Generated successfully");
+        
     });
+      // console.log(res.data.token)
+      
       console.log(passbook);
-    
-  }
+      console.log("Now you need to Signin first");
+      makeRequestL();
 
-module.exports=makeRequestR;
+      // inquirer.prompt(qn.Questions).then((answers) => {
+      //   makeRequestR(answers);
+      // });
+
+      // functionality();
+
+      // if (res.data.success === "true") {
+      //   console.log(passbook, "\n");
+      //   functionality();
+      // }
+            
+    };
+
+    inquirer.prompt(qn.Questions).then((answers) => {
+      makeRequestR(answers);
+    });
+}
+  
+

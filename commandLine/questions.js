@@ -85,7 +85,7 @@ const Questions = [
       message: "Enter your email ID: ",
     },
     {
-      type: "input",
+      type: "password",
       name: "Password",
       message: "Enter your password: ",
     },
@@ -106,6 +106,16 @@ const Questions = [
       type: "input",
       name: "Amount",
       message: "Enter the amount of money you want to withdraw: ",
+    },
+    {
+      type: "input",
+      name: "Email",
+      message: "Enter your Email id: ",
+    },
+    {
+      type: "input",
+      name: "Pin",
+      message: "Enter your Pin: ",
     },
     
   ];

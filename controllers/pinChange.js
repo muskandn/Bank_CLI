@@ -1,3 +1,4 @@
+const Transaction=require("../models/transactionSchema")
 const fs=require("file-system")
 const bcrypt = require('bcryptjs');
 const User=require("../models/userSchema");
@@ -11,6 +12,7 @@ module.exports=async(req,res)=>{
             return res.status(400).json({error:"Please fill all the fields"})
         }
 
+        console.log(req.authuser.Pin)
         const userLogin= await User.findOne({AccountNo: AccountNo});
         if(userLogin){
             //for comparing the user entered pin with the stored encrypted password
@@ -28,6 +30,8 @@ module.exports=async(req,res)=>{
                     {$set:{
                         Pin: latestPin,
                     }})
+
+                console.log(req.authuser.Pin)
                 res.json({message:"Pin has changed Successfully"});
                 }
         }else{
