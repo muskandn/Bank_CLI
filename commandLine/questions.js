@@ -51,8 +51,13 @@ const Questions = [
     },
     {
       type:"input",
+      name:"DOB",
+      message:"Enter your Date of Birth (DD/MM/YY): ",
+    },
+    {
+      type:"input",
       name:"Age",
-      message:" Enter your Age: ",
+      message:"Enter your Age: ",
     },
     // {
     //   type:"input",
@@ -62,7 +67,7 @@ const Questions = [
     {
       type:"input",
       name:"Gender",
-      message:" Enter your Gender: ",
+      message:"Enter your Gender (M/F): ",
     },
     {
       type: "input",
@@ -73,7 +78,12 @@ const Questions = [
       type: "input",
       name: "Address",
       message: "Enter your Address Name: ",
-    }
+    },
+    {
+      type: "input",
+      name: "Type",
+      message: "Enter Account Type: ",
+    },
   ];
   
   

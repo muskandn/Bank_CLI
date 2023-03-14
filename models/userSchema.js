@@ -68,6 +68,11 @@ const userSchema= new mongoose.Schema({
         
         index: { unique: true },// default is not working still now in postman need to add the account no all the time!!!!!!!!!!!!
     },
+    CIF:{
+        type: String,
+        required: true,
+        // default is not working still now in postman need to add the account no all the time!!!!!!!!!!!!
+    },
     // Expiry_Date: Current date + fixed period of time
     Bank_Balance: {
         type:Number,
@@ -108,6 +113,12 @@ const userSchema= new mongoose.Schema({
         minlength:10,
         // unique:true
     },
+    DOB:{
+        type:String
+    },
+    Type:{
+        type:String
+    },
     Age:{
         type:String
     },
@@ -116,7 +127,9 @@ const userSchema= new mongoose.Schema({
     //     required: true
     // },
     Gender:{
-        type: String
+        type: String,
+        enum:['F','M'],
+        default: 'F'
     },
     FatherName:{
         type:String,
@@ -126,11 +139,14 @@ const userSchema= new mongoose.Schema({
 
         type:String
     },
+    Type:{
+        type:String
+    },
     OpeningDate:{
         type:Date,
         default: Date
     },
-
+    
     tokens:[
         {
             token:{

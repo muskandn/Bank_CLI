@@ -25,7 +25,7 @@ module.exports=()=>{
         const userToken = retrieveUserToken();
     
         let res = await axios.post(
-            "http://localhost:4000/fdCreate",
+            "http://localhost:4000/fdcreate",
             {
                 data: answers,
             },
@@ -74,7 +74,7 @@ module.exports=()=>{
         const userToken = retrieveUserToken();
     
         let res = await axios.post(
-            "http://localhost:4000/fdWithdraw",
+            "http://localhost:4000/fdwithdraw",
             {
                 data: answers,
             },

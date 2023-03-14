@@ -4,16 +4,18 @@
                         | Bank of Origin |
                         ------------------     
                                                                                        
-        Name: wwwwwwwwwwwwwww wwwwwwwwwwwwwwwww                                                 
-        S/D/H/o: sssssssss
-        Account No.: undefined                                                                                                                                            
-        Address: sssssssssssss                                                                            
-        Phone No: 7878787878                                                                                
-        Email: wwwwwwwww@gmail.com   
-        AadhaarCard: 787878787878
-        Gender: sss
-        Age: 21 
-        Date of Issue: 12-3-2023                                                                    
+        Name: undefined undefined                                                 
+        S/D/H/o: undefined
+        Account No: undefined     
+        CIF No: undefined     
+        A/c Type:undefined                                                                                                                                   
+        Address: undefined                                                                            
+        Phone No: undefined                                                                                
+        Email: muskandn02@gmail.com   
+        AadhaarCard: undefined
+        Gender: undefined
+        Age: undefined 
+        Date of Issue: 14-3-2023                                                                    
                                                                                            
       -------------------------------------------------------------------
       

@@ -36,7 +36,6 @@ module.exports=()=>{
 
       // This arrangement can be altered based on how we want the date's format to appear.
       // let currentDate = `${day}-${month}-${year}`;
-
     // const token=fs.readFileSync("data.txt","utf8");
     const passbook=`
       -------------------------------------------------------------------
@@ -46,7 +45,9 @@ module.exports=()=>{
                                                                                        
         Name: ${answers.FirstName} ${answers.LastName}                                                 
         S/D/H/o: ${answers.FatherName}
-        Account No.: ${res.data.AccountNo}                                                                                                                                            
+        Account No: ${res.data.AccountNo}     
+        CIF No: ${res.data.CIF}     
+        A/c Type:${answers.Type}                                                                                                                                   
         Address: ${answers.Address}                                                                            
         Phone No: ${answers.PhoneNo}                                                                                
         Email: ${answers.Email}   
@@ -59,21 +60,21 @@ module.exports=()=>{
       `
       fs.writeFile("data.txt",passbook, function (err) {
         if (err) throw err;
-        // console.log(res.data.token);
+        
         // console.log("Passbook Generated successfully");
         
     });
       // console.log(res.data.token)
-      
+      console.log(res.data.message);
       console.log(passbook);
-      console.log("Now you need to Signin first");
-      makeRequestL();
+      // console.log("Now you need to Signin first");
+      // makeRequestL();
 
       // inquirer.prompt(qn.Questions).then((answers) => {
       //   makeRequestR(answers);
       // });
 
-      // functionality();
+      functionality();
 
       // if (res.data.success === "true") {
       //   console.log(passbook, "\n");
