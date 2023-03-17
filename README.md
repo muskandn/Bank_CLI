@@ -65,7 +65,8 @@ To create an account :
     banking-system register
 ```
 
-PassBook
+PassBook:
+
 ![alt text](https://github.com/muskandn/bio_init_/blob/main/images/passbook.png?raw=true)
 
 ### Screenshot
