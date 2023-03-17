@@ -30,8 +30,7 @@ Client: `commander.js` `inquirer.js` `bcrypt.js`
 ```
 
 ### Screenshot
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-g.png?raw=true)
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-help.png?raw=true)
+![alt text](https://github.com/muskandn/bio_init_/blob/main/images/help.png?raw=true)
 
 
 ```bash
@@ -59,17 +58,15 @@ Commands:
 ```
 
 ### Screenshot
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-g.png?raw=true)
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-s1.png?raw=true)
+![alt text](https://github.com/muskandn/bio_init_/blob/main/images/start.png?raw=true)
 
 To create an account :
-bash
+```bash
     banking-system register
+```
 
 ### Screenshot
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-g.png?raw=true)
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-r1.png?raw=true)
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-r2.png?raw=true)
+![alt text](https://github.com/muskandn/bio_init_/blob/main/images/registration.png?raw=true)
 
 To logged in an existing account :
 ```bash
@@ -77,8 +74,7 @@ To logged in an existing account :
 ```
 
 ### Screenshot
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-g.png?raw=true)
-![alt text](https://github.com/SakshiGoyat/banking_system/blob/master/server/images/banking-system-l1.png?raw=true)
+![alt text](https://github.com/muskandn/bio_init_/blob/main/images/login.png?raw=true)
 
 ### Features
 bash
